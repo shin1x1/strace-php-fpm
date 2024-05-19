@@ -22,7 +22,7 @@ services:
       - ./docker/php-fpm/php.ini:/usr/local/etc/php/conf.d/zzmyphp.ini
       - ./docker/php-fpm/php-fpm.conf:/usr/local/etc/php-fpm.d/zzmyphp-fpm.conf
     restart: always
-    command: strace -f -s 1024 -o /var/www/html/storage/logs/trace.txt php-fpm
+    command: strace -f -s 1024 -y -tt -o /var/www/html/storage/logs/trace.txt php-fpm
     depends_on:
       - db
       - db-test
