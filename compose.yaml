@@ -11,8 +11,6 @@ services:
     restart: always
   php-fpm:
     build: ./docker/php-fpm
-    cap_add:
-      - SYS_PTRACE
     volumes:
       - ./laravel:/var/www/html
       # Comment out if you want to enable OPcache
@@ -21,17 +19,13 @@ services:
       - ./docker/php-fpm/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
       - ./docker/php-fpm/php.ini:/usr/local/etc/php/conf.d/zzmyphp.ini
       - ./docker/php-fpm/php-fpm.conf:/usr/local/etc/php-fpm.d/zzmyphp-fpm.conf
-    restart: always
     command: strace -f -s 1024 -y -ttT -o /var/www/html/storage/logs/trace.txt php-fpm
     depends_on:
       - db
-      - db-test
-  db: &db
+  db:
     image: postgres:16-alpine
     environment:
       - POSTGRES_USER=app
       - POSTGRES_PASSWORD=pass
       - POSTGRES_DB=app
       - LC_ALL=C
-  db-test:
-    *db
