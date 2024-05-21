@@ -7,6 +7,6 @@ init:
 
 .PHONY: clean
 clean:
-	rm laravel/storage/logs/trace.txt
+	-rm laravel/storage/logs/trace.txt
 	docker compose down -v
 
